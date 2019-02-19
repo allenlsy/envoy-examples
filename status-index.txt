@@ -1,0 +1,7 @@
+/clusters: all backends and their stats.
+/listeners: all enabled frontends (only the ports).
+/certs: certs that are deployed on the server.
+/runtime: runtime config.
+/server_info: Envoy server info including Envoy build SHA and others.
+/config_dump: current Envoy configs.
+/stats: all stats counters.

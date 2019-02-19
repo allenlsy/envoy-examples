@@ -1,0 +1,97 @@
+version: '2'
+services:
+  front-envoy:
+    build:
+      context: .
+      dockerfile: Dockerfile-frontenvoy
+    volumes:
+      - ./front-envoy.yaml:/etc/front-envoy.yaml
+      - ./xds.eds.yaml:/etc/xds.eds.yaml
+      - ./status-index.txt:/etc/status-index.txt
+    networks:
+      envoymesh:
+        ipv4_address: 172.28.1.1
+    expose:
+      - "80"
+      # - "6973"
+    ports:
+      - "8000:80"
+      - "6973:6973"
+
+  instance1:
+    build:
+      context: .
+      dockerfile: Dockerfile-service
+    volumes:
+      - ./service-envoy.yaml:/etc/service-envoy.yaml
+    networks:
+      envoymesh:
+        aliases:
+          - instance1
+        ipv4_address: 172.28.1.2
+    environment:
+      - INSTANCE_ID=1
+      - SERVICE_NAME=dora
+    expose:
+      - "80"
+
+  instance2:
+    build:
+      context: .
+      dockerfile: Dockerfile-service
+    volumes:
+      - ./service-envoy.yaml:/etc/service-envoy.yaml
+    networks:
+      envoymesh:
+        aliases:
+          - instance2
+        ipv4_address: 172.28.1.3
+    environment:
+      - INSTANCE_ID=2
+      - SERVICE_NAME=dora
+    expose:
+      - "80"
+
+
+  instance3:
+    build:
+      context: .
+      dockerfile: Dockerfile-service
+    volumes:
+      - ./service-envoy.yaml:/etc/service-envoy.yaml
+    networks:
+      envoymesh:
+        aliases:
+          - instance3
+        ipv4_address: 172.28.1.4
+    environment:
+      - INSTANCE_ID=3
+      - SERVICE_NAME=dora
+    expose:
+      - "80"
+
+
+  instance4:
+    build:
+      context: .
+      dockerfile: Dockerfile-service
+    volumes:
+      - ./service-envoy.yaml:/etc/service-envoy.yaml
+    networks:
+      envoymesh:
+        aliases:
+          - instance4
+        ipv4_address: 172.28.1.5
+    environment:
+      - INSTANCE_ID=4
+      - SERVICE_NAME=dora
+    expose:
+      - "80"
+
+networks:
+  envoymesh:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16

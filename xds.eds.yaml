@@ -1,0 +1,42 @@
+version_info: "0"
+resources:
+- "@type": type.googleapis.com/envoy.api.v2.ClusterLoadAssignment
+  cluster_name: dora
+  endpoints:
+  - lb_endpoints:
+    - endpoint:
+        address:
+          socket_address:
+            address: 172.28.1.2
+            port_value: 80
+      metadata:
+        filter_metadata:
+          envoy.lb:
+            owner: kramer
+    - endpoint:
+        address:
+          socket_address:
+            address: 172.28.1.3
+            port_value: 80
+      metadata:
+        filter_metadata:
+          envoy.lb:
+            owner: newman
+    - endpoint:
+        address:
+          socket_address:
+            address: 172.28.1.4
+            port_value: 80
+      metadata:
+        filter_metadata:
+          envoy.lb:
+            owner: PUBLIC
+    - endpoint:
+        address:
+          socket_address:
+            address: 172.28.1.5
+            port_value: 80
+      metadata:
+        filter_metadata:
+          envoy.lb:
+            owner: PUBLIC
